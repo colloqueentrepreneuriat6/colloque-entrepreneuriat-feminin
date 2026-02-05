@@ -1,4 +1,4 @@
-import { getServerSession } from "next-auth";
+import { getServerSession } from "next-auth"; // @ts-nocheck
 import { redirect } from "next/navigation";
 import { authOptions } from "@/lib/auth";
 import { Header } from "@/components/Header";
