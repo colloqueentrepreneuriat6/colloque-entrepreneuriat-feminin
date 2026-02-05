@@ -60,7 +60,7 @@ export default async function AdminPage() {
       .select("proposition_id, decision, remarques")
       .order("submitted_at", { ascending: true });
     if (evals) {
-      evals.forEach((e) => {
+      evals.forEach((e: any) => {
         if (!evaluationsByProposition[e.proposition_id])
           evaluationsByProposition[e.proposition_id] = [];
         evaluationsByProposition[e.proposition_id].push({
