@@ -3,7 +3,6 @@
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { updatePropositionStatus } from "./actions";
-import { sendDecisionEmail } from "./email-actions";
 
 type Evaluation = { decision: string; remarques: string | null };
 
@@ -53,67 +52,12 @@ export function NotifyAuthor({
 }) {
   const router = useRouter();
   const [message, setMessage] = useState<{ type: "error" | "success"; text: string } | null>(null);
-  const [isSending, setIsSending] = useState(false);
   const decisionLabel = getDecisionLabel(evaluations);
   const subject = encodeURIComponent("Colloque - Décision sur votre proposition");
   const body = encodeURIComponent(buildEmailBody(titre, evaluations, decisionLabel));
   const mailto = auteurEmail
     ? `mailto:${auteurEmail}?subject=${subject}&body=${body}`
     : null;
-
-  async function handleSendEmail() {
-    if (!auteurEmail) {
-      setMessage({ type: "error", text: "Email de l'auteur non disponible" });
-      return;
-    }
-
-    setIsSending(true);
-    setMessage(null);
-
-    try {
-      // Créer le FormData pour l'envoi d'email
-      const formData = new FormData();
-      formData.append("proposition_id", propositionId);
-      formData.append("auteur_email", auteurEmail);
-      formData.append("titre", titre);
-      
-      const decision = getDecisionLabel(evaluations) === "Acceptée" ? "accepte" : "refuse";
-      formData.append("decision", decision);
-      
-      evaluations.forEach((e) => {
-        if (e.remarques) {
-          formData.append("remarques", e.remarques);
-        }
-      });
-
-      // Envoyer l'email automatiquement
-      const emailResult = await sendDecisionEmail(formData);
-      
-      if (emailResult.error) {
-        setMessage({ type: "error", text: emailResult.error });
-        return;
-      }
-
-      // Marquer comme notifié
-      const markFormData = new FormData();
-      markFormData.append("proposition_id", propositionId);
-      markFormData.append("statut", "notifiee");
-      
-      const result = await updatePropositionStatus(markFormData);
-      
-      if (result.error) {
-        setMessage({ type: "error", text: result.error });
-        return;
-      }
-
-      setMessage({ type: "success", text: "Email envoyé et proposition marquée comme notifiée." });
-      router.refresh();
-    } catch (error) {
-      setMessage({ type: "error", text: "Erreur lors de l'envoi de l'email" });
-    } finally {
-      setIsSending(false);
-    }
-  }
 
   async function handleMarkNotified(formData: FormData) {
     setMessage(null);
@@ -155,36 +99,26 @@ export function NotifyAuthor({
       )}
 
       <div className="flex gap-2 flex-wrap">
-        <button
-          onClick={handleSendEmail}
-          disabled={isSending || !auteurEmail}
-          className="btn-primary text-sm disabled:opacity-50 disabled:cursor-not-allowed"
-        >
-          {isSending ? "Envoi en cours..." : " Envoyer l'email automatiquement"}
-        </button>
-
-        {mailto && (
+        {mailto ? (
           <a
             href={mailto}
-            className="btn-secondary text-sm"
+            className="btn-primary text-sm"
             target="_blank"
             rel="noopener noreferrer"
           >
-            Ouvrir client email
+            📧 Envoyer l'email
           </a>
+        ) : (
+          <p className="text-sm text-stone-500 italic">
+            Email de l'auteur non disponible
+          </p>
         )}
 
-        <form
-          className="inline"
-          onSubmit={(e) => {
-            e.preventDefault();
-            handleMarkNotified(new FormData(e.currentTarget));
-          }}
-        >
+        <form action={handleMarkNotified} className="inline">
           <input type="hidden" name="proposition_id" value={propositionId} />
           <input type="hidden" name="statut" value="notifiee" />
           <button type="submit" className="btn-secondary text-sm">
-            Marquer comme notifiée
+            ✓ Marquer comme notifiée
           </button>
         </form>
       </div>
