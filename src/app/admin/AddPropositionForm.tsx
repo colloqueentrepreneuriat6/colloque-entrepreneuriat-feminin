@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import { useRouter } from "next/navigation";
-import { createProposition } from "./actions";
+import { addProposition } from "./actions";
 
 export function AddPropositionForm() {
   const router = useRouter();
@@ -10,7 +10,7 @@ export function AddPropositionForm() {
 
   async function handleSubmit(formData: FormData) {
     setMessage(null);
-    const result = await createProposition(formData);
+    const result = await addProposition(formData);
     if (result.error) {
       setMessage({ type: "error", text: result.error });
       return;

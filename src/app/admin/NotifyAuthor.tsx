@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import { useRouter } from "next/navigation";
-import { markAsNotified } from "./actions";
+import { updatePropositionStatus } from "./actions";
 
 type Evaluation = { decision: string; remarques: string | null };
 
@@ -59,7 +59,7 @@ export function NotifyAuthor({
 
   async function handleMarkNotified(formData: FormData) {
     setMessage(null);
-    const result = await markAsNotified(formData);
+    const result = await updatePropositionStatus(formData);
     if (result.error) {
       setMessage({ type: "error", text: result.error });
       return;
