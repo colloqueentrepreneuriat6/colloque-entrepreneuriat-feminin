@@ -1,7 +1,7 @@
 # Contenus des emails pour les membres du comité scientifique
 
-## Email pour la Présidente (Pr. HIDER Fouzia)
-**Destinataire :** Pr. HIDER Fouzia  
+## Email pour l'Administratrice (Dr. HIDER Fouzia)
+**Destinataire :** Dr. HIDER Fouzia  
 **Username :** hiderfouzia  
 **Password :** admin2024  
 **Rôle :** Administrateur  
@@ -9,7 +9,7 @@
 **Objet :** Vos identifiants d'administrateur - Colloque National sur l'Entrepreneuriat Féminin
 
 **Variables à remplacer dans le template :**
-- {{MEMBRE_NOM}} → "Pr. HIDER Fouzia"
+- {{MEMBRE_NOM}} → "Dr. HIDER Fouzia"
 - {{USERNAME}} → "hiderfouzia"
 - {{PASSWORD}} → "admin2024"
 - {{PLATFORM_URL}} → "https://votre-domaine.com/connexion"
@@ -20,87 +20,87 @@
 
 ### Pr. AHOUARI Zahir
 **Username :** ahouarizahir  
-**Password :** comite2024
+**Password :** zahir2024
 
 ### Pr. BESSAI Rachid
 **Username :** bessairachid  
-**Password :** comite2024
+**Password :** rachid2024
 
 ### Pr. DJADDA Mahmoud
 **Username :** djaddamahmoud  
-**Password :** comite2024
+**Password :** mahmoud2024
 
 ### Pr. BENKKEROU Fiadh
 **Username :** benkkeroufiadh  
-**Password :** comite2024
+**Password :** fiadh2024
 
 ### Dr. DJEFFAL Mokrane
 **Username :** djeffalmokrane  
-**Password :** comite2024
+**Password :** mokrane2024
 
 ### Pr. FARADJ MOHAMED AKLI
 **Username :** faradjakli  
-**Password :** comite2024
+**Password :** akli2024
 
 ### Dr. DJOUAB Mustapha
 **Username :** djouabmustapha  
-**Password :** comite2024
+**Password :** mustapha2024
 
 ### Dr. HIDER FOUZIA (compte reviewer)
 **Username :** hiderfouziamember  
-**Password :** comite2024
+**Password :** fouzia2024
 
 ### Dr. DJELOULI Nesrine
 **Username :** djeloulinesrine  
-**Password :** comite2024
+**Password :** nesrine2024
 
 ### Dr. HALIS Samir
 **Username :** halissamir  
-**Password :** comite2024
+**Password :** samir2024
 
 ### Dr. NOUI RABAH
 **Username :** nouirabah  
-**Password :** comite2024
+**Password :** rabah2024
 
 ### Dr. IDIR SMAIL
 **Username :** idirsmail  
-**Password :** comite2024
+**Password :** smail2024
 
 ### Dr. HAMOUDI SOUHILA
 **Username :** hamoudisouhila  
-**Password :** comite2024
+**Password :** souhila2024
 
 ### Dr. AISSATMOHAND TAHAR
 **Username :** aissatmohand  
-**Password :** comite2024
+**Password :** mohand2024
 
 ### Dr. AIT HATRITE KAHINA
 **Username :** aithatritekahina  
-**Password :** comite2024
+**Password :** kahina2024
 
 ### Dr. OUSAIDENE Yassine
 **Username :** ousaideneyassine  
-**Password :** comite2024
+**Password :** yassine2024
 
 ### Pr. ABEDOU Abderrahmane
 **Username :** abedouabderrahmane  
-**Password :** comite2024
+**Password :** abderrahmane2024
 
 ### Dr. MELLOUD Sidali
 **Username :** melloudsidali  
-**Password :** comite2024
+**Password :** sidali2024
 
 ### Pr. TOBAL Rachid
 **Username :** tobalrachid  
-**Password :** comite2024
+**Password :** rachid2024
 
 ### Pr. kafi Farida
 **Username :** kafifarida  
-**Password :** comite2024
+**Password :** farida2024
 
 ### Dr.Boudjerda yacine
 **Username :** boudjerdayacine  
-**Password :** comite2024
+**Password :** yacine2024
 
 ---
 
@@ -138,7 +138,15 @@
 
 ## Notes de sécurité
 
-- Les mots de passe sont simples pour faciliter la première connexion
+- Les mots de passe sont simples mais **uniques** pour chaque membre
 - Demander aux membres de changer leur mot de passe lors de la première connexion
 - Ne pas envoyer les identifiants par email non chiffré si possible
 - Prévoir une procédure de récupération de mot de passe
+
+---
+
+## Contact officiel
+
+**Email de contact :** colloque.entrepreneuriat6@gmail.com  
+**Président du comité :** Pr. Hadrbache Bachir  
+**Gestionnaire de la plateforme :** Dr. HIDER Fouzia

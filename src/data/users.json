@@ -3,14 +3,14 @@
     "id": "admin-hider-fouzia",
     "username": "hiderfouzia",
     "password": "admin2024",
-    "name": "Pr. HIDER Fouzia - Présidente Comité Scientifique",
+    "name": "Dr. HIDER Fouzia - Administratrice Comité Scientifique",
     "email": "",
     "role": "admin"
   },
   {
     "id": "reviewer-ahouari-zahir",
     "username": "ahouarizahir",
-    "password": "comite2024",
+    "password": "zahir2024",
     "name": "Pr. AHOUARI Zahir (Université de Bejaia)",
     "email": "",
     "role": "reviewer"
@@ -18,7 +18,7 @@
   {
     "id": "reviewer-bessai-rachid",
     "username": "bessairachid",
-    "password": "comite2024",
+    "password": "rachid2024",
     "name": "Pr. BESSAI Rachid (Université de Bejaia)",
     "email": "",
     "role": "reviewer"
@@ -26,7 +26,7 @@
   {
     "id": "reviewer-djadda-mahmoud",
     "username": "djaddamahmoud",
-    "password": "comite2024",
+    "password": "mahmoud2024",
     "name": "Pr. DJADDA Mahmoud (Université de Bejaia)",
     "email": "",
     "role": "reviewer"
@@ -34,7 +34,7 @@
   {
     "id": "reviewer-benkkerou-fiadh",
     "username": "benkkeroufiadh",
-    "password": "comite2024",
+    "password": "fiadh2024",
     "name": "Pr. BENKKEROU Fiadh (Université de Bejaia)",
     "email": "",
     "role": "reviewer"
@@ -42,7 +42,7 @@
   {
     "id": "reviewer-djeffal-mokrane",
     "username": "djeffalmokrane",
-    "password": "comite2024",
+    "password": "mokrane2024",
     "name": "Dr. DJEFFAL Mokrane (Université de Bejaia)",
     "email": "",
     "role": "reviewer"
@@ -50,7 +50,7 @@
   {
     "id": "reviewer-faradj-akli",
     "username": "faradjakli",
-    "password": "comite2024",
+    "password": "akli2024",
     "name": "Pr. FARADJ MOHAMED AKLI (Université de Bejaia)",
     "email": "",
     "role": "reviewer"
@@ -58,7 +58,7 @@
   {
     "id": "reviewer-djouab-mustapha",
     "username": "djouabmustapha",
-    "password": "comite2024",
+    "password": "mustapha2024",
     "name": "Dr. DJOUAB Mustapha (Université de Bejaia)",
     "email": "",
     "role": "reviewer"
@@ -66,7 +66,7 @@
   {
     "id": "reviewer-hider-fouzia-member",
     "username": "hiderfouziamember",
-    "password": "comite2024",
+    "password": "fouzia2024",
     "name": "Dr. HIDER FOUZIA (Université de Bejaia)",
     "email": "",
     "role": "reviewer"
@@ -74,7 +74,7 @@
   {
     "id": "reviewer-djelouli-nesrine",
     "username": "djeloulinesrine",
-    "password": "comite2024",
+    "password": "nesrine2024",
     "name": "Dr. DJELOULI Nesrine (Université de Bejaia)",
     "email": "",
     "role": "reviewer"
@@ -82,7 +82,7 @@
   {
     "id": "reviewer-halis-samir",
     "username": "halissamir",
-    "password": "comite2024",
+    "password": "samir2024",
     "name": "Dr. HALIS Samir (Université de Bejaia)",
     "email": "",
     "role": "reviewer"
@@ -90,7 +90,7 @@
   {
     "id": "reviewer-noui-rabah",
     "username": "nouirabah",
-    "password": "comite2024",
+    "password": "rabah2024",
     "name": "Dr. NOUI RABAH (Université de Bejaia)",
     "email": "",
     "role": "reviewer"
@@ -98,7 +98,7 @@
   {
     "id": "reviewer-idir-smail",
     "username": "idirsmail",
-    "password": "comite2024",
+    "password": "smail2024",
     "name": "Dr. IDIR SMAIL (Université de Bejaia)",
     "email": "",
     "role": "reviewer"
@@ -106,7 +106,7 @@
   {
     "id": "reviewer-hamoudi-souhila",
     "username": "hamoudisouhila",
-    "password": "comite2024",
+    "password": "souhila2024",
     "name": "Dr. HAMOUDI SOUHILA (Université de Bejaia)",
     "email": "",
     "role": "reviewer"
@@ -114,7 +114,7 @@
   {
     "id": "reviewer-aissat-mohand",
     "username": "aissatmohand",
-    "password": "comite2024",
+    "password": "mohand2024",
     "name": "Dr. AISSATMOHAND TAHAR (Université de Bejaia)",
     "email": "",
     "role": "reviewer"
@@ -122,7 +122,7 @@
   {
     "id": "reviewer-ait-hatrite-kahina",
     "username": "aithatritekahina",
-    "password": "comite2024",
+    "password": "kahina2024",
     "name": "Dr. AIT HATRITE KAHINA (Université de Bejaia)",
     "email": "",
     "role": "reviewer"
@@ -130,7 +130,7 @@
   {
     "id": "reviewer-ousaidene-yassine",
     "username": "ousaideneyassine",
-    "password": "comite2024",
+    "password": "yassine2024",
     "name": "Dr. OUSAIDENE Yassine (Université d'Alger 2)",
     "email": "",
     "role": "reviewer"
@@ -138,7 +138,7 @@
   {
     "id": "reviewer-abedou-abderrahmane",
     "username": "abedouabderrahmane",
-    "password": "comite2024",
+    "password": "abderrahmane2024",
     "name": "Pr. ABEDOU Abderrahmane, Directeur de recherche au CREAD/Alger",
     "email": "",
     "role": "reviewer"
@@ -146,7 +146,7 @@
   {
     "id": "reviewer-melloud-sidali",
     "username": "melloudsidali",
-    "password": "comite2024",
+    "password": "sidali2024",
     "name": "Dr. MELLOUD Sidali (Ecole de management de Koléa)",
     "email": "",
     "role": "reviewer"
@@ -154,7 +154,7 @@
   {
     "id": "reviewer-tobal-rachid",
     "username": "tobalrachid",
-    "password": "comite2024",
+    "password": "rachid2024",
     "name": "Pr. TOBAL Rachid (Université de Skikda)",
     "email": "",
     "role": "reviewer"
@@ -162,7 +162,7 @@
   {
     "id": "reviewer-kafi-farida",
     "username": "kafifarida",
-    "password": "comite2024",
+    "password": "farida2024",
     "name": "Pr. kafi Farida (université de Taref)",
     "email": "",
     "role": "reviewer"
@@ -170,7 +170,7 @@
   {
     "id": "reviewer-boudjerda-yacine",
     "username": "boudjerdayacine",
-    "password": "comite2024",
+    "password": "yacine2024",
     "name": "Dr.Boudjerda yacine (université de jijel)",
     "email": "",
     "role": "reviewer"

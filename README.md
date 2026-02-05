@@ -28,6 +28,13 @@ Plateforme de gestion complète pour le colloque national sur l'entrepreneuriat 
 
 ## 🚀 Déploiement
 
+### Points à vérifier avant déploiement :
+
+- ✅ **Variables d'environnement à configurer (.env.local)**
+- ✅ **Base de données Supabase à créer**
+- ✅ **Domaine personnalisé si souhaité**
+- ✅ **SSL certificates** (automatique sur Vercel)
+
 ### Option 1 : Vercel (Recommandé - Gratuit)
 1. Créer un compte sur [vercel.com](https://vercel.com)
 2. Connecter votre compte GitHub
@@ -128,9 +135,10 @@ supabase/                  # Schéma de base de données
 
 ## 📞 Contact
 
-- **Email :** colloque-ef@univ-bejaia.dz
+- **Email :** colloque.entrepreneuriat6@gmail.com
+- **Président du comité :** Pr. Hadrbache Bachir
+- **Gestionnaire plateforme :** Dr. HIDER Fouzia
 - **Université :** Université de Bejaia
-- **Présidente :** Pr. HIDER Fouzia
 
 ## 📄 Licence
 
