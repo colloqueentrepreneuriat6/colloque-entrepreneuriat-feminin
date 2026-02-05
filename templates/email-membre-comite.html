@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vos identifiants - Colloque National sur l'Entrepreneuriat Féminin</title>
+    <style>
+        body {
+            font-family: 'Georgia', serif;
+            line-height: 1.6;
+            color: #333;
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #f8f6f3;
+        }
+        .header {
+            text-align: center;
+            border-bottom: 3px solid #ea580c;
+            padding-bottom: 20px;
+            margin-bottom: 30px;
+        }
+        .title {
+            color: #9333ea;
+            font-size: 24px;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+        .subtitle {
+            color: #ea580c;
+            font-size: 16px;
+            font-style: italic;
+        }
+        .content {
+            background-color: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+        .credentials {
+            background-color: #fef3e2;
+            border-left: 4px solid #ea580c;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 5px;
+        }
+        .login-button {
+            display: inline-block;
+            background: linear-gradient(135deg, #ea580c, #9333ea);
+            color: white;
+            padding: 12px 30px;
+            text-decoration: none;
+            border-radius: 25px;
+            font-weight: bold;
+            margin: 20px 0;
+            text-align: center;
+        }
+        .footer {
+            text-align: center;
+            margin-top: 30px;
+            padding-top: 20px;
+            border-top: 1px solid #ddd;
+            font-size: 14px;
+            color: #666;
+        }
+        .highlight {
+            color: #ea580c;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <div class="title">Colloque National sur l'Entrepreneuriat Féminin</div>
+        <div class="subtitle">Tendances, Défis et Opportunités en Algérie</div>
+    </div>
+
+    <div class="content">
+        <p>Cher/Chère <span class="highlight">{{MEMBRE_NOM}}</span>,</p>
+        
+        <p>Nous avons le plaisir de vous accueillir comme membre du comité scientifique du Colloque National sur l'Entrepreneuriat Féminin qui se tiendra à l'Université de Bejaia.</p>
+        
+        <p>Pour accéder à la plateforme de gestion des propositions, veuillez utiliser les identifiants suivants :</p>
+        
+        <div class="credentials">
+            <p><strong>Lien de connexion :</strong> <a href="{{PLATFORM_URL}}">{{PLATFORM_URL}}</a></p>
+            <p><strong>Nom d'utilisateur :</strong> <span class="highlight">{{USERNAME}}</span></p>
+            <p><strong>Mot de passe :</strong> <span class="highlight">{{PASSWORD}}</span></p>
+        </div>
+        
+        <p style="text-align: center;">
+            <a href="{{PLATFORM_URL}}" class="login-button">Se connecter à la plateforme</a>
+        </p>
+        
+        <p><strong>Vos responsabilités en tant que membre du comité :</strong></p>
+        <ul>
+            <li>Évaluer les propositions qui vous seront assignées</li>
+            <li>Donner votre avis sur la pertinence scientifique</li>
+            <li>Proposer des recommandations pour l'amélioration</li>
+            <li>Participer aux décisions finales d'acceptation</li>
+        </ul>
+        
+        <p>La plateforme vous permettra de consulter les propositions, de télécharger les documents, et de soumettre vos évaluations en toute sécurité.</p>
+        
+        <p>Pour toute question technique ou assistance, n'hésitez pas à nous contacter.</p>
+        
+        <p>Nous comptons sur votre expertise pour faire de ce colloque un succès scientifique.</p>
+        
+        <p>Cordialement,</p>
+        <p><strong>Pr. HIDER Fouzia</strong><br>
+        Présidente du Comité Scientifique<br>
+        Université de Bejaia</p>
+    </div>
+
+    <div class="footer">
+        <p><strong>Colloque National sur l'Entrepreneuriat Féminin</strong><br>
+        Université de Bejaia - Algérie<br>
+        Contact : colloque-ef@univ-bejaia.dz</p>
+    </div>
+</body>
+</html>

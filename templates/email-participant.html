@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Décision - Colloque National sur l'Entrepreneuriat Féminin</title>
+    <style>
+        body {
+            font-family: 'Georgia', serif;
+            line-height: 1.6;
+            color: #333;
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #f8f6f3;
+        }
+        .header {
+            text-align: center;
+            border-bottom: 3px solid #ea580c;
+            padding-bottom: 20px;
+            margin-bottom: 30px;
+        }
+        .title {
+            color: #9333ea;
+            font-size: 24px;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+        .subtitle {
+            color: #ea580c;
+            font-size: 16px;
+            font-style: italic;
+        }
+        .content {
+            background-color: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+        .decision-accepted {
+            background-color: #f0fdf4;
+            border-left: 4px solid #16a34a;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 5px;
+            text-align: center;
+        }
+        .decision-rejected {
+            background-color: #fef2f2;
+            border-left: 4px solid #dc2626;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 5px;
+            text-align: center;
+        }
+        .decision-title {
+            font-size: 20px;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+        .accepted {
+            color: #16a34a;
+        }
+        .rejected {
+            color: #dc2626;
+        }
+        .footer {
+            text-align: center;
+            margin-top: 30px;
+            padding-top: 20px;
+            border-top: 1px solid #ddd;
+            font-size: 14px;
+            color: #666;
+        }
+        .highlight {
+            color: #ea580c;
+            font-weight: bold;
+        }
+        .proposition-info {
+            background-color: #fef3e2;
+            padding: 15px;
+            border-radius: 5px;
+            margin: 15px 0;
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <div class="title">Colloque National sur l'Entrepreneuriat Féminin</div>
+        <div class="subtitle">Tendances, Défis et Opportunités en Algérie</div>
+    </div>
+
+    <div class="content">
+        <p>Cher/Chère <span class="highlight">{{AUTEUR_NOM}}</span>,</p>
+        
+        <p>Nous vous remercions pour votre soumission au Colloque National sur l'Entrepreneuriat Féminin organisé par l'Université de Bejaia.</p>
+        
+        <div class="proposition-info">
+            <p><strong>Votre proposition :</strong> {{PROPOSITION_TITRE}}</p>
+            <p><strong>Date de soumission :</strong> {{DATE_SOUMISSION}}</p>
+        </div>
+        
+        {{DECISION_BLOCK}}
+        
+        <p>Le comité scientifique a examiné attentivement votre proposition parmi de nombreuses soumissions de qualité.</p>
+        
+        <p>Nous vous remercions de votre intérêt pour notre colloque et pour votre contribution à la promotion de l'entrepreneuriat féminin en Algérie.</p>
+        
+        <p>Cordialement,</p>
+        <p><strong>Le Comité Scientifique</strong><br>
+        Colloque National sur l'Entrepreneuriat Féminin<br>
+        Université de Bejaia</p>
+    </div>
+
+    <div class="footer">
+        <p><strong>Colloque National sur l'Entrepreneuriat Féminin</strong><br>
+        Université de Bejaia - Algérie<br>
+        Contact : colloque-ef@univ-bejaia.dz</p>
+    </div>
+</body>
+</html>
