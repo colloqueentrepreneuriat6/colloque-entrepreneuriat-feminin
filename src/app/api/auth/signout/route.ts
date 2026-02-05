@@ -1,16 +1,19 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { signOut } from 'next-auth/react';
+import { getToken } from 'next-auth/jwt';
 
 export async function POST(request: NextRequest) {
   try {
     // Récupérer l'URL de base pour la redirection
     const baseUrl = request.nextUrl.origin;
     
-    // Déconnecter l'utilisateur
-    await signOut({ redirect: false });
+    // Créer une réponse qui redirige vers la page d'accueil
+    const response = NextResponse.redirect(`${baseUrl}/?déconnexion=success`);
     
-    // Rediriger vers la page d'accueil avec un message
-    return NextResponse.redirect(`${baseUrl}/?message=déconnecté`);
+    // Supprimer le cookie de session
+    response.cookies.delete('next-auth.session-token');
+    response.cookies.delete('__Secure-next-auth.session-token');
+    
+    return response;
   } catch (error) {
     console.error('Erreur déconnexion:', error);
     // En cas d'erreur, rediriger quand même vers l'accueil
