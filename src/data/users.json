@@ -174,5 +174,21 @@
     "name": "Dr.Boudjerda yacine (université de jijel)",
     "email": "",
     "role": "reviewer"
+  },
+  {
+    "id": "reviewer-test1-mohamed",
+    "username": "testmohamed",
+    "password": "test1234",
+    "name": "Dr. Mohamed Test (Université de Test)",
+    "email": "mohamed@test.com",
+    "role": "reviewer"
+  },
+  {
+    "id": "reviewer-test2-fatima",
+    "username": "testfatima",
+    "password": "test5678",
+    "name": "Dr. Fatima Test (Université de Test)",
+    "email": "fatima@test.com",
+    "role": "reviewer"
   }
 ]

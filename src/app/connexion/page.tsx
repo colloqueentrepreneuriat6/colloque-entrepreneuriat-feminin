@@ -22,7 +22,7 @@ export default function ConnexionPage() {
     });
     setLoading(false);
     if (res?.error) {
-      setError("Nom d'utilisateur ou mot de passe incorrect.");
+      setError("Identifiants incorrects. Veuillez vérifier votre nom d'utilisateur et mot de passe.");
       return;
     }
     window.location.href = "/";
