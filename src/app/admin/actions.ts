@@ -37,8 +37,12 @@ export async function assignReviewers(formData: FormData) {
   const propositionId = formData.get("proposition_id") as string;
   const reviewerIds = formData.getAll("reviewer_ids") as string[];
 
-  if (!propositionId || reviewerIds.length === 0) {
-    return { error: "Veuillez sélectionner une proposition et au moins un reviewer." };
+  if (!propositionId) {
+    return { error: "Veuillez sélectionner une proposition." };
+  }
+  
+  if (reviewerIds.length === 0) {
+    return { error: "Veuillez sélectionner au moins un reviewer." };
   }
 
   // Supprimer les anciennes attributions
