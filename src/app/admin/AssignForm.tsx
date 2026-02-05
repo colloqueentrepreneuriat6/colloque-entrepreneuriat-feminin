@@ -29,12 +29,24 @@ export function AssignForm({
 
   async function handleSubmit(formData: FormData) {
     setMessage(null);
-    const result = await assignReviewers(formData);
+    
+    // Récupérer les deux reviewers séparément
+    const reviewer1 = formData.get("reviewer1_id") as string;
+    const reviewer2 = formData.get("reviewer2_id") as string;
+    
+    // Créer un nouveau FormData avec les deux reviewers
+    const newFormData = new FormData();
+    newFormData.append("proposition_id", formData.get("proposition_id") as string);
+    
+    if (reviewer1) newFormData.append("reviewer_ids", reviewer1);
+    if (reviewer2) newFormData.append("reviewer_ids", reviewer2);
+    
+    const result = await assignReviewers(newFormData);
     if (result.error) {
       setMessage({ type: "error", text: result.error });
       return;
     }
-    setMessage({ type: "success", text: "Deux rapporteurs ont été attribués (évaluation en aveugle)." });
+    setMessage({ type: "success", text: "Deux rapporteurs ont été attribués avec succès (évaluation en aveugle)." });
     setOpen(false);
     router.refresh();
   }
@@ -60,8 +72,9 @@ export function AssignForm({
           <div className="flex-1 min-w-[180px]">
             <label className="block text-xs font-medium text-stone-600 mb-1">Rapporteur 1</label>
             <select
-              name="reviewer_ids"
+              name="reviewer1_id"
               className="w-full rounded-lg border border-stone-300 px-3 py-2 text-sm text-stone-900 focus:border-brand-600 focus:ring-1 focus:ring-brand-500/20 outline-none"
+              required
             >
               <option value="">Choisir…</option>
               {reviewers.map((r) => (
@@ -74,8 +87,9 @@ export function AssignForm({
           <div className="flex-1 min-w-[180px]">
             <label className="block text-xs font-medium text-stone-600 mb-1">Rapporteur 2</label>
             <select
-              name="reviewer_ids"
+              name="reviewer2_id"
               className="w-full rounded-lg border border-stone-300 px-3 py-2 text-sm text-stone-900 focus:border-brand-600 focus:ring-1 focus:ring-brand-500/20 outline-none"
+              required
             >
               <option value="">Choisir…</option>
               {reviewers.map((r) => (
