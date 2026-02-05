@@ -49,7 +49,7 @@ export default async function AdminPage() {
 
     const { data: attrs } = await supabase.from("attributions").select("proposition_id");
     if (attrs) {
-      attrs.forEach((a) => {
+      attrs.forEach((a: any) => {
         attributionsByProposition[a.proposition_id] =
           (attributionsByProposition[a.proposition_id] ?? 0) + 1;
       });
