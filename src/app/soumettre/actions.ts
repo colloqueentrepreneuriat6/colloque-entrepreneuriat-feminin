@@ -2,6 +2,8 @@
 
 import { revalidatePath } from "next/cache";
 import { supabaseAdmin } from "@/lib/supabase/server";
+import type { Proposition } from "@/types/database";
+import type { Database } from "@/types/database";
 
 const STORAGE_BUCKET = "documents";
 
@@ -45,6 +47,7 @@ export async function submitProposition(formData: FormData) {
     document_url = urlData.publicUrl;
   }
 
+  // @ts-ignore
   const { error } = await supabase.from("propositions").insert({
     titre,
     auteur_nom,

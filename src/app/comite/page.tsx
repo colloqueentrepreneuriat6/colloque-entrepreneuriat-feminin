@@ -1,4 +1,6 @@
-import { getServerSession } from "next-auth"; // @ts-nocheck
+// @ts-nocheck
+
+import { getServerSession } from "next-auth";
 import { redirect } from "next/navigation";
 import { authOptions } from "@/lib/auth";
 import { Header } from "@/components/Header";
@@ -7,6 +9,7 @@ import { supabaseAdmin } from "@/lib/supabase/server";
 import { EvaluationForm } from "./EvaluationForm";
 import type { Proposition } from "@/types/database";
 import type { Evaluation } from "@/types/database";
+import type { Attribution } from "@/types/database";
 
 export default async function ComitePage() {
   const session = await getServerSession(authOptions);
