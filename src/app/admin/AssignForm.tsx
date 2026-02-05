@@ -34,12 +34,22 @@ export function AssignForm({
     const reviewer1 = formData.get("reviewer1_id") as string;
     const reviewer2 = formData.get("reviewer2_id") as string;
     
+    // Validation
+    if (!reviewer1 || !reviewer2) {
+      setMessage({ type: "error", text: "Veuillez sélectionner deux rapporteurs différents." });
+      return;
+    }
+    
+    if (reviewer1 === reviewer2) {
+      setMessage({ type: "error", text: "Veuillez sélectionner deux rapporteurs différents." });
+      return;
+    }
+    
     // Créer un nouveau FormData avec les deux reviewers
     const newFormData = new FormData();
     newFormData.append("proposition_id", formData.get("proposition_id") as string);
-    
-    if (reviewer1) newFormData.append("reviewer_ids", reviewer1);
-    if (reviewer2) newFormData.append("reviewer_ids", reviewer2);
+    newFormData.append("reviewer_ids", reviewer1);
+    newFormData.append("reviewer_ids", reviewer2);
     
     const result = await assignReviewers(newFormData);
     if (result.error) {
