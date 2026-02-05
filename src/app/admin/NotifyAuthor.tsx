@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { updatePropositionStatus } from "./actions";
+import { sendDecisionEmail } from "./email-actions";
 
 type Evaluation = { decision: string; remarques: string | null };
 
@@ -30,32 +31,89 @@ function buildEmailBody(
   return lines.join("\n");
 }
 
-function getDecisionLabel(evals: Evaluation[]): string {
-  const acceptCount = evals.filter((e) => e.decision === "accepte").length;
-  if (acceptCount === 2) return "Votre proposition a été acceptée.";
-  if (acceptCount === 0) return "Votre proposition n'a pas été retenue.";
-  return "Le comité a rendu des avis partagés : un rapporteur a accepté, un a refusé.";
+function getDecisionLabel(evaluations: Evaluation[]): string {
+  const acceptCount = evaluations.filter((e) => e.decision === "accepte").length;
+  const refuseCount = evaluations.filter((e) => e.decision === "refuse").length;
+  
+  if (acceptCount > refuseCount) return "Acceptée";
+  if (refuseCount > acceptCount) return "Refusée";
+  return "En attente de décision finale";
 }
 
 export function NotifyAuthor({
   propositionId,
-  titre,
   auteurEmail,
+  titre,
   evaluations,
 }: {
   propositionId: string;
-  titre: string;
   auteurEmail: string | null;
+  titre: string;
   evaluations: Evaluation[];
 }) {
   const router = useRouter();
   const [message, setMessage] = useState<{ type: "error" | "success"; text: string } | null>(null);
+  const [isSending, setIsSending] = useState(false);
   const decisionLabel = getDecisionLabel(evaluations);
   const subject = encodeURIComponent("Colloque - Décision sur votre proposition");
   const body = encodeURIComponent(buildEmailBody(titre, evaluations, decisionLabel));
   const mailto = auteurEmail
     ? `mailto:${auteurEmail}?subject=${subject}&body=${body}`
     : null;
+
+  async function handleSendEmail() {
+    if (!auteurEmail) {
+      setMessage({ type: "error", text: "Email de l'auteur non disponible" });
+      return;
+    }
+
+    setIsSending(true);
+    setMessage(null);
+
+    try {
+      // Créer le FormData pour l'envoi d'email
+      const formData = new FormData();
+      formData.append("proposition_id", propositionId);
+      formData.append("auteur_email", auteurEmail);
+      formData.append("titre", titre);
+      
+      const decision = getDecisionLabel(evaluations) === "Acceptée" ? "accepte" : "refuse";
+      formData.append("decision", decision);
+      
+      evaluations.forEach((e) => {
+        if (e.remarques) {
+          formData.append("remarques", e.remarques);
+        }
+      });
+
+      // Envoyer l'email automatiquement
+      const emailResult = await sendDecisionEmail(formData);
+      
+      if (emailResult.error) {
+        setMessage({ type: "error", text: emailResult.error });
+        return;
+      }
+
+      // Marquer comme notifié
+      const markFormData = new FormData();
+      markFormData.append("proposition_id", propositionId);
+      markFormData.append("statut", "notifiee");
+      
+      const result = await updatePropositionStatus(markFormData);
+      
+      if (result.error) {
+        setMessage({ type: "error", text: result.error });
+        return;
+      }
+
+      setMessage({ type: "success", text: "Email envoyé et proposition marquée comme notifiée." });
+      router.refresh();
+    } catch (error) {
+      setMessage({ type: "error", text: "Erreur lors de l'envoi de l'email" });
+    } finally {
+      setIsSending(false);
+    }
+  }
 
   async function handleMarkNotified(formData: FormData) {
     setMessage(null);
@@ -77,22 +135,45 @@ export function NotifyAuthor({
             <span className="font-medium">
               Rapporteur {i + 1} : {e.decision === "accepte" ? "Accepter" : "Refuser"}
             </span>
-            {e.remarques && <p className="mt-0.5 whitespace-pre-wrap">{e.remarques}</p>}
+            {e.remarques && (
+              <p className="text-xs text-stone-500 mt-1 italic">{e.remarques}</p>
+            )}
           </div>
         ))}
       </div>
-      <div className="flex flex-wrap items-center gap-3 pt-2">
-        {auteurEmail && mailto && (
+
+      {message && (
+        <div
+          className={`p-3 rounded text-sm ${
+            message.type === "error"
+              ? "bg-red-50 text-red-700 border border-red-200"
+              : "bg-green-50 text-green-700 border border-green-200"
+          }`}
+        >
+          {message.text}
+        </div>
+      )}
+
+      <div className="flex gap-2 flex-wrap">
+        <button
+          onClick={handleSendEmail}
+          disabled={isSending || !auteurEmail}
+          className="btn-primary text-sm disabled:opacity-50 disabled:cursor-not-allowed"
+        >
+          {isSending ? "Envoi en cours..." : " Envoyer l'email automatiquement"}
+        </button>
+
+        {mailto && (
           <a
             href={mailto}
-            className="btn-primary text-sm py-2"
+            className="btn-secondary text-sm"
+            target="_blank"
+            rel="noopener noreferrer"
           >
-            Notifier l&apos;auteur par email
+            Ouvrir client email
           </a>
         )}
-        {!auteurEmail && (
-          <span className="text-sm text-stone-500">Aucune adresse email pour cette proposition.</span>
-        )}
+
         <form
           className="inline"
           onSubmit={(e) => {
@@ -101,15 +182,11 @@ export function NotifyAuthor({
           }}
         >
           <input type="hidden" name="proposition_id" value={propositionId} />
-          <button type="submit" className="btn-secondary text-sm py-2">
+          <input type="hidden" name="statut" value="notifiee" />
+          <button type="submit" className="btn-secondary text-sm">
             Marquer comme notifiée
           </button>
         </form>
-        {message && (
-          <span className={`text-sm ${message.type === "error" ? "text-red-600" : "text-brand-800"}`}>
-            {message.text}
-          </span>
-        )}
       </div>
     </div>
   );
