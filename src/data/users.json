@@ -7,6 +7,14 @@
     "email": "",
     "role": "admin"
   },
+    {
+    "id": "admin-djouab-mustapha",
+    "username": "mustaphadjouab",
+    "password": "admin2025",
+    "name": "Dr. DJOUAB Mustapha - Administrateur Comité Scientifique",
+    "email": "",
+    "role": "admin"
+  },
   {
     "id": "reviewer-ahouari-zahir",
     "username": "ahouarizahir",
@@ -180,7 +188,7 @@
     "username": "testmohamed",
     "password": "test1234",
     "name": "Dr. Mohamed Test (Université de Test)",
-    "email": "mohamed@test.com",
+    "email": "",
     "role": "reviewer"
   },
   {
@@ -188,7 +196,7 @@
     "username": "testfatima",
     "password": "test5678",
     "name": "Dr. Fatima Test (Université de Test)",
-    "email": "fatima@test.com",
+    "email": "",
     "role": "reviewer"
   }
 ]

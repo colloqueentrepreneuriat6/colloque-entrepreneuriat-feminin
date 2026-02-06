@@ -1,8 +1,8 @@
-// @ts-nocheck
 "use server";
 
 import { revalidatePath } from "next/cache";
 import { supabaseAdmin } from "@/lib/supabase/server";
+import type { Database } from "@/types/database";
 
 export async function addProposition(formData: FormData) {
   const supabase = supabaseAdmin;
@@ -15,7 +15,7 @@ export async function addProposition(formData: FormData) {
 
   if (!titre?.trim()) return { error: "L'intitulé est obligatoire." };
 
-  const { error } = await supabase
+  const { error } = await (supabase as any)
     .from("propositions")
     .insert({
       titre: titre.trim(),
@@ -57,11 +57,22 @@ export async function assignReviewers(formData: FormData) {
     rapporteur_id: reviewerId,
   }));
 
-  const { error } = await supabase
+  const { error: attrError } = await (supabase as any)
     .from("attributions")
     .insert(attributions);
 
-  if (error) return { error: error.message };
+  if (attrError) return { error: attrError.message };
+
+  // Mettre à jour le statut de la proposition si 2 reviewers sont assignés
+  if (reviewerIds.length >= 2) {
+    const { error: statusError } = await (supabase as any)
+      .from("propositions")
+      .update({ statut: "attribuee" })
+      .eq("id", propositionId);
+
+    if (statusError) return { error: statusError.message };
+  }
+
   revalidatePath("/admin");
   return { success: true };
 }
@@ -77,7 +88,7 @@ export async function updatePropositionStatus(formData: FormData) {
     return { error: "Paramètres manquants." };
   }
 
-  const { error } = await supabase
+  const { error } = await (supabase as any)
     .from("propositions")
     .update({ statut: newStatus })
     .eq("id", propositionId);

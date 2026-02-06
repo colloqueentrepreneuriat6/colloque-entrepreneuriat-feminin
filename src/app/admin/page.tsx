@@ -8,6 +8,7 @@ import { getReviewers } from "@/lib/reviewers";
 import { AddPropositionForm } from "./AddPropositionForm";
 import { AssignForm } from "./AssignForm";
 import { NotifyAuthor } from "./NotifyAuthor";
+import { SendCommitteeEmails } from "./send-committee-emails";
 import { ServerPropositionActions } from "@/components/ServerPropositionActions";
 import type { Proposition } from "@/types/database";
 
@@ -37,7 +38,7 @@ export default async function AdminPage() {
   const reviewers = getReviewers();
 
   let propositions: Proposition[] = [];
-  let attributionsByProposition: Record<string, number> = {};
+  let attributionsByProposition: Record<string, any[]> = {};
   let evaluationsByProposition: Record<string, { decision: string; remarques: string | null }[]> = {};
 
   if (supabase) {
@@ -47,11 +48,16 @@ export default async function AdminPage() {
       .order("created_at", { ascending: false });
     propositions = props ?? [];
 
-    const { data: attrs } = await supabase.from("attributions").select("proposition_id");
+    const { data: attrs } = await supabase
+      .from("attributions")
+      .select("proposition_id, rapporteur_id")
+      .order("created_at", { ascending: false });
     if (attrs) {
       attrs.forEach((a: any) => {
-        attributionsByProposition[a.proposition_id] =
-          (attributionsByProposition[a.proposition_id] ?? 0) + 1;
+        if (!attributionsByProposition[a.proposition_id]) {
+          attributionsByProposition[a.proposition_id] = [];
+        }
+        attributionsByProposition[a.proposition_id].push(a.rapporteur_id);
       });
     }
 
@@ -237,6 +243,10 @@ export default async function AdminPage() {
             </div>
           </section>
 
+          <section className="mb-10">
+            <SendCommitteeEmails />
+          </section>
+
           <section className="card-elevated overflow-hidden">
             <div className="px-8 py-6 border-b border-slate-200/60 bg-gradient-to-r from-slate-50 to-white">
               <div className="flex items-center justify-between">
@@ -295,6 +305,20 @@ export default async function AdminPage() {
                             >
                               {statutLabels[p.statut] ?? p.statut}
                             </span>
+                            
+                            {/* Indicateur visuel d'attribution */}
+                            {attributionsByProposition[p.id] && attributionsByProposition[p.id].length > 0 && (
+                              <div className="flex items-center gap-1">
+                                <div className="w-6 h-6 bg-green-100 rounded-full flex items-center justify-center">
+                                  <svg className="w-3 h-3 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M5 13l4 4L19 7" />
+                                  </svg>
+                                </div>
+                                <span className="text-xs font-medium text-green-700 bg-green-50 px-2 py-1 rounded-full border border-green-200">
+                                  {attributionsByProposition[p.id].length}/2
+                                </span>
+                              </div>
+                            )}
                           </div>
                           
                           {(p.auteur_nom || p.auteur_email) && (
@@ -335,12 +359,39 @@ export default async function AdminPage() {
                       )}
                       
                       {(p.statut === "attribuee" || p.statut === "evaluee" || p.statut === "notifiee") &&
-                        (attributionsByProposition[p.id] ?? 0) >= 2 && (
-                          <div className="mt-4 flex items-center gap-2 text-xs text-green-700 bg-green-50 px-3 py-2 rounded-lg border border-green-200">
-                            <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
-                            </svg>
-                            2 rapporteurs assignés (évaluation en aveugle)
+                        attributionsByProposition[p.id] && attributionsByProposition[p.id].length > 0 && (
+                          <div className="mt-4 p-4 bg-green-50 rounded-xl border border-green-200">
+                            <div className="flex items-center justify-between mb-3">
+                              <div className="flex items-center gap-2 text-sm text-green-700">
+                                <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                                </svg>
+                                <span className="font-medium">
+                                  {attributionsByProposition[p.id].length} rapporteur{attributionsByProposition[p.id].length > 1 ? 's' : ''} assigné{attributionsByProposition[p.id].length > 1 ? 's' : ''}
+                                </span>
+                                {attributionsByProposition[p.id].length >= 2 && (
+                                  <span className="text-xs text-green-600">(évaluation en aveugle)</span>
+                                )}
+                              </div>
+                              <div className="w-6 h-6 bg-green-200 rounded-full flex items-center justify-center">
+                                <span className="text-xs font-bold text-green-800">
+                                  {attributionsByProposition[p.id].length}
+                                </span>
+                              </div>
+                            </div>
+                            <div className="space-y-1">
+                              {attributionsByProposition[p.id].map((reviewerId: string, index: number) => {
+                                const reviewer = reviewers.find(r => r.id === reviewerId);
+                                return reviewer ? (
+                                  <div key={reviewerId} className="flex items-center gap-2 text-xs text-green-600">
+                                    <svg className="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
+                                    </svg>
+                                    <span className="font-medium">{reviewer.name}</span>
+                                  </div>
+                                ) : null;
+                              })}
+                            </div>
                           </div>
                         )}
                       

@@ -7,6 +7,7 @@ import { Header } from "@/components/Header";
 import Link from "next/link";
 import { supabaseAdmin } from "@/lib/supabase/server";
 import { EvaluationForm } from "./EvaluationForm";
+import { EditEvaluationForm } from "./EditEvaluationForm";
 import type { Proposition } from "@/types/database";
 import type { Evaluation } from "@/types/database";
 import type { Attribution } from "@/types/database";
@@ -24,10 +25,20 @@ export default async function ComitePage() {
   const supabase = supabaseAdmin;
 
   if (supabase && userId) {
-    const { data: attributions } = await supabase
-      .from("attributions")
-      .select("proposition_id")
-      .eq("rapporteur_id", userId);
+    // Récupérer toutes les données en parallèle pour optimiser le chargement
+    const [attributionsResult, evaluationsResult] = await Promise.all([
+      supabase
+        .from("attributions")
+        .select("proposition_id")
+        .eq("rapporteur_id", userId),
+      supabase
+        .from("evaluations")
+        .select("id, proposition_id, decision, remarques, submitted_at")
+        .eq("rapporteur_id", userId)
+    ]);
+
+    const { data: attributions } = attributionsResult;
+    const { data: evaluations } = evaluationsResult;
 
     if (attributions?.length) {
       const ids = attributions.map((a) => a.proposition_id);
@@ -36,11 +47,6 @@ export default async function ComitePage() {
         .select("id, titre, auteur_nom, auteur_email, document_url, statut, created_at")
         .in("id", ids)
         .order("created_at", { ascending: false });
-
-      const { data: evaluations } = await supabase
-        .from("evaluations")
-        .select("id, proposition_id, decision, remarques, submitted_at")
-        .eq("rapporteur_id", userId);
 
       const evalByProp = (evaluations ?? []).reduce(
         (acc, e) => {
@@ -294,6 +300,15 @@ export default async function ComitePage() {
                               </div>
                             )}
                           </div>
+                          
+                          <EditEvaluationForm 
+                            propositionId={p.id}
+                            propositionTitre={p.titre}
+                            currentEvaluation={{
+                              decision: p.evaluation.decision,
+                              remarques: p.evaluation.remarques
+                            }}
+                          />
                         </div>
                       ) : (
                         <div className="p-4 rounded-xl bg-gradient-to-br from-warning-50 to-orange-50 border border-warning-200">

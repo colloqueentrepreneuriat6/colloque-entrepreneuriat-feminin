@@ -53,6 +53,14 @@
             border-radius: 5px;
             text-align: center;
         }
+        .decision-pending {
+            background-color: #fffbeb;
+            border-left: 4px solid #f59e0b;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 5px;
+            text-align: center;
+        }
         .decision-title {
             font-size: 20px;
             font-weight: bold;
@@ -63,6 +71,9 @@
         }
         .rejected {
             color: #dc2626;
+        }
+        .pending {
+            color: #f59e0b;
         }
         .footer {
             text-align: center;
@@ -91,26 +102,27 @@
     </div>
 
     <div class="content">
-        <p>Cher/Chère <span class="highlight">{{AUTEUR_NOM}}</span>,</p>
+        <p>Bonjour,</p>
         
         <p>Nous vous remercions pour votre soumission au Colloque National sur l'Entrepreneuriat Féminin organisé par l'Université de Bejaia.</p>
         
         <div class="proposition-info">
-            <p><strong>Votre proposition :</strong> {{PROPOSITION_TITRE}}</p>
-            <p><strong>Date de soumission :</strong> {{DATE_SOUMISSION}}</p>
+            <p><strong>Votre proposition :</strong> {{titre}}</p>
+            <p><strong>Date de soumission :</strong> {{date}}</p>
         </div>
         
-        {{DECISION_BLOCK}}
+        <div class="decision-{{decision}}">
+            <div class="decision-title">Décision du comité scientifique : {{decision}}</div>
+        </div>
         
         <p>Le comité scientifique a examiné attentivement votre proposition parmi de nombreuses soumissions de qualité.</p>
         
         <p>Nous vous remercions de votre intérêt pour notre colloque et pour votre contribution à la promotion de l'entrepreneuriat féminin en Algérie.</p>
         
-        <p>Cordialement,</p>
-        <p><strong>Le Comité Scientifique</strong><br>
-        Président : Pr. Hadrbache Bachir<br>
-        Colloque National sur l'Entrepreneuriat Féminin<br>
-        Université de Bejaia</p>
+        <p>Cordialement :</p>
+        <p><strong>HADERBACHE Bachir</strong><br>
+        Professeur en sociologie<br>
+        Université ABDERRAHMANE Mira de Bejaia</p>
     </div>
 
     <div class="footer">

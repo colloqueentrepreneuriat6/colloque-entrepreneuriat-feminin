@@ -18,6 +18,7 @@ export function AssignForm({
   const router = useRouter();
   const [message, setMessage] = useState<{ type: "error" | "success"; text: string } | null>(null);
   const [open, setOpen] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
   if (reviewers.length < 2) {
     return (
@@ -28,6 +29,7 @@ export function AssignForm({
   }
 
   async function handleSubmit(formData: FormData) {
+    setIsSubmitting(true);
     setMessage(null);
     
     // Récupérer les deux reviewers séparément
@@ -37,11 +39,13 @@ export function AssignForm({
     // Validation
     if (!reviewer1 || !reviewer2) {
       setMessage({ type: "error", text: "Veuillez sélectionner deux rapporteurs différents." });
+      setIsSubmitting(false);
       return;
     }
     
     if (reviewer1 === reviewer2) {
       setMessage({ type: "error", text: "Veuillez sélectionner deux rapporteurs différents." });
+      setIsSubmitting(false);
       return;
     }
     
@@ -51,14 +55,23 @@ export function AssignForm({
     newFormData.append("reviewer_ids", reviewer1);
     newFormData.append("reviewer_ids", reviewer2);
     
-    const result = await assignReviewers(newFormData);
-    if (result.error) {
-      setMessage({ type: "error", text: result.error });
-      return;
+    try {
+      const result = await assignReviewers(newFormData);
+      if (result.error) {
+        setMessage({ type: "error", text: result.error });
+      } else {
+        setMessage({ type: "success", text: "Deux rapporteurs ont été attribués avec succès." });
+        setOpen(false);
+        // Forcer un rechargement complet de la page pour mettre à jour les compteurs
+        setTimeout(() => {
+          window.location.reload();
+        }, 1500);
+      }
+    } catch (error) {
+      setMessage({ type: "error", text: "Une erreur est survenue. Veuillez réessayer." });
+    } finally {
+      setIsSubmitting(false);
     }
-    setMessage({ type: "success", text: "Deux rapporteurs ont été attribués avec succès (évaluation en aveugle)." });
-    setOpen(false);
-    router.refresh();
   }
 
   return (
@@ -72,11 +85,8 @@ export function AssignForm({
       </button>
       {open && (
         <form
+          action={handleSubmit}
           className="flex flex-wrap items-end gap-3 p-4 rounded-lg bg-stone-50 border border-stone-200"
-          onSubmit={async (e) => {
-            e.preventDefault();
-            await handleSubmit(new FormData(e.currentTarget));
-          }}
         >
           <input type="hidden" name="proposition_id" value={propositionId} />
           <div className="flex-1 min-w-[180px]">
@@ -109,13 +119,17 @@ export function AssignForm({
               ))}
             </select>
           </div>
-          <button type="submit" className="btn-primary text-sm py-2">
-            Attribuer
+          <button 
+            type="submit" 
+            className="btn-primary text-sm py-2"
+            disabled={isSubmitting}
+          >
+            {isSubmitting ? "Attribution..." : "Attribuer"}
           </button>
           {message && (
             <p
               className={`w-full text-sm ${
-                message.type === "error" ? "text-red-600" : "text-brand-800"
+                message.type === "error" ? "text-red-600" : "text-green-600"
               }`}
             >
               {message.text}

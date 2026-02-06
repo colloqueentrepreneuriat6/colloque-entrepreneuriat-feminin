@@ -17,17 +17,17 @@ export async function sendDecisionEmail(formData: FormData) {
   }
 
   // Charger le template HTML
-  const templatePath = join(process.cwd(), "templates", "email-participant.html");
+  const templatePath = join(process.cwd(), "templates", "email-decision-professionnel.html");
   let htmlTemplate = readFileSync(templatePath, "utf-8");
 
   // Personnaliser le template
-  const decisionLabel = decision === "accepte" ? "Acceptée" : "Refusée";
-  const remarquesHtml = remarques.map(r => r ? `<p>${r}</p>` : "").join("");
+  const decisionLabel = decision === "accepte" ? "Acceptée" : decision === "refuse" ? "Refusée" : "En attente de décision finale";
+  const decisionClass = decision === "accepte" ? "accepted" : decision === "refuse" ? "rejected" : "pending";
 
   htmlTemplate = htmlTemplate
     .replace(/{{titre}}/g, titre)
     .replace(/{{decision}}/g, decisionLabel)
-    .replace(/{{remarques}}/g, remarquesHtml)
+    .replace(/{{decision_class}}/g, decisionClass)
     .replace(/{{date}}/g, new Date().toLocaleDateString("fr-FR"));
 
   // Envoyer l'email

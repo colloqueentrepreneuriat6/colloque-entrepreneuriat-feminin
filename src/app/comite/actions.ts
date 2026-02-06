@@ -1,49 +1,53 @@
 // @ts-nocheck
 
-import { revalidatePath } from "next/cache";
-import { getServerSession } from "next-auth"; // @ts-nocheck
-import { supabaseAdmin } from "@/lib/supabase/server"; // @ts-nocheck
-
 export async function submitEvaluation(formData: FormData) {
-  const session = await getServerSession(authOptions); // @ts-nocheck
-  const userId = (session?.user as { id?: string })?.id;
-  if (!session || !userId) return { error: "Non connecté." };
+  try {
+    const response = await fetch('/api/evaluations', {
+      method: 'POST',
+      body: formData,
+    });
 
-  const supabase = supabaseAdmin; // @ts-nocheck
-  if (!supabase) return { error: "Service indisponible." };
+    if (!response.ok) {
+      const errorData = await response.json();
+      return { error: errorData.error || "Erreur lors de la soumission." };
+    }
 
-  const propositionId = formData.get("proposition_id") as string;
-  const decision = formData.get("decision") as any; // @ts-nocheck
-  const remarques = (formData.get("remarques") as string)?.trim() || null;
-
-  if (!propositionId || !decision || !["accepte", "refuse"].includes(decision))
-    return { error: "Veuillez choisir une décision (accepter ou refuser)." };
-
-  const { error: insertError } = await supabase.from("evaluations").insert({
-    proposition_id: propositionId,
-    rapporteur_id: userId,
-    decision,
-    remarques,
-  });
-
-  if (insertError) {
-    if (insertError.code === "23505") return { error: "Vous avez déjà soumis votre évaluation pour cette proposition." };
-    return { error: insertError.message };
+    const result = await response.json();
+    
+    // Forcer le rechargement de la page pour voir les mises à jour
+    if (typeof window !== 'undefined') {
+      window.location.reload();
+    }
+    
+    return result;
+  } catch (error) {
+    console.error("Erreur lors de la soumission:", error);
+    return { error: "Erreur réseau" };
   }
+}
 
-  const { count } = await supabase
-    .from("evaluations")
-    .select("id", { count: "exact", head: true })
-    .eq("proposition_id", propositionId);
+export async function updateEvaluation(formData: FormData) {
+  try {
+    const response = await fetch('/api/evaluations', {
+      method: 'PUT',
+      body: formData,
+    });
 
-  if (count === 2) {
-    await supabase
-      .from("propositions")
-      .update({ statut: "evaluee" })
-      .eq("id", propositionId);
+    if (!response.ok) {
+      const errorData = await response.json();
+      return { error: errorData.error || "Erreur lors de la mise à jour." };
+    }
+
+    const result = await response.json();
+    
+    // Forcer le rechargement de la page pour voir les mises à jour
+    if (typeof window !== 'undefined') {
+      window.location.reload();
+    }
+    
+    return result;
+  } catch (error) {
+    console.error("Erreur lors de la mise à jour:", error);
+    return { error: "Erreur réseau" };
   }
-
-  revalidatePath("/comite");
-  revalidatePath("/admin");
-  return { success: true };
 }

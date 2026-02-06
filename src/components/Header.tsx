@@ -93,7 +93,7 @@ export async function Header() {
                 )}
 
                 {/* Logout */}
-                <form action="/api/auth/signout?callbackUrl=/" method="POST">
+                <form action="/api/auth/signout?callbackUrl=/deconnexion" method="POST">
                   <button
                     type="submit"
                     className="text-body text-sm text-secondary-500 hover:text-danger-600 transition-colors duration-200 p-2 rounded-lg hover:bg-danger-50"
